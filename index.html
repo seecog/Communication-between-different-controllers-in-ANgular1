@@ -1,0 +1,41 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+
+</head>
+<body ng-app='myAPP'>
+<div ng-controller="india">
+value is {{a}}<br>
+<button ng-click="sendChild()">Send Child</button>
+
+<div ng-controller="usa">
+value is {{b}}<br>
+<button ng-click="sendParent()">Send Parent</button>
+</div>
+</div>
+
+</body>
+<script>
+var app = angular.module('myAPP',[]);
+app.controller('india',function($scope){
+$scope.sendChild = function(){
+$scope.$broadcast("firec",100);
+}
+$scope.$on('firep',function(evt,data){
+$scope.a = data;
+});
+});
+app.controller('usa',function($scope){
+$scope.$on('firec',function(evt,data){
+$scope.b = data;
+})
+$scope.sendParent = function(){
+$scope.$emit('firep',200)
+}
+
+});
+</script>
+
+
+</html>
